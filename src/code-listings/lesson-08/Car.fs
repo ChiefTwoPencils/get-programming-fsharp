@@ -2,7 +2,20 @@
 
 open System
 
-//TODO: Create helper functions to provide the building blocks to implement driveTo.
+/// Gets the distance to a given destination 
+let getDistance (destination) =
+    let d = destination
+    if d = "Gas" then 10    
+    elif d = "Home" || d = "Stadium" then 25 
+    elif d = "Office" then 50
+    else failwith "Unknown destination!"
 
-/// Drives to a given destination given a starting amount of petrol
-let driveTo (petrol, destination) = petrol
+/// Gets the new petrol state by distance
+let calculateRemainingPetrol(currentPetrol, distance) =
+    if currentPetrol >= distance then currentPetrol - distance
+    else failwith "Oops! You've run out of petrol"
+
+let driveTo(petrol, destination) =
+    let remaining = calculateRemainingPetrol(petrol, getDistance(destination))
+    if destination = "Gas" then remaining + 50
+    else remaining
